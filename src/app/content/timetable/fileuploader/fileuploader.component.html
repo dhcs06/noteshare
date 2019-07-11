@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="jumbotron">
+
+    <h4>File feltöltése (.xlsx)</h4>
+    <br>
+    <form>
+        <div class="form-group">
+          <label for="exampleFormControlFile1">Válassz a fájlok közül:
+          </label>
+          <input #file type="file" class="form-control-file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" >
+        </div>
+        <button class="btn btn-info" (click)= "uploadFile(file.files)">Kiválaszt</button>
+        <span style="font-weight:bold;color:green;" *ngIf="message">
+            {{message}}
+          </span>
+      </form>
+  </div>
+</div>
+<div>

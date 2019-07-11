@@ -1,0 +1,65 @@
+<div id="modal-wrapper" class="modal2">
+  <form class="modal-content2 animate" #frm="ngForm" (ngSubmit)="frm.form.valid && signUp()">
+    <div class="tab-group">
+      <ul class="nav nav-tabs">
+        <li id="login"><a routerLink="/login">Bejelentkezés</a></li>
+        <li class="active" id="signup"><a routerLink="/singup">Regisztráció</a></li>
+      </ul>
+      <div id="signup" class="tab-pane fade in active" background-color="rgb(76,76,79)">
+        <div class="imgcontainer">
+          
+          <img src="../../assets/whale.png" alt="Avatar" class="avatar">
+          <h1 style="text-align:center">Regisztráció</h1>
+        </div> 
+        <div class="container2">
+            <div class="form-group">
+              <input type="text" class="form-control" [(ngModel)]="form.username" #username="ngModel" [ngClass]="{ 'is-invalid': frm.submitted && username.invalid }"
+                required pattern="^[a-zA-Z0-9_.+-]+$" minlength="5" placeholder="Felhasználónév" name="username" (input)="clearAlert()">
+              <div *ngIf="frm.submitted && username.invalid" class="alert alert-danger">
+                <div *ngIf="username.errors?.required">Felhasználónév megadása kötelező!</div>
+                <div *ngIf="username.errors?.minlength">Felhasználónév túl rövid!</div>
+                <div *ngIf="username.errors?.pattern">Felhasználónév nem megfelelő formátumú!</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" [(ngModel)]="form.password" #password="ngModel" [ngClass]="{ 'is-invalid': frm.submitted && password.invalid }"
+                required pattern="^[a-zA-Z0-9._]+$" minlength="5" maxlength="20" placeholder="Jelszó" name="password" id="password">
+              <div *ngIf="frm.submitted && password.invalid" class="alert alert-danger">
+                <div *ngIf="password.errors?.required">Jelszó megadása kötelező!</div>
+                <div *ngIf="password.errors?.minlength">Jelszó túl rövid!</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="password" appConfirmEqualValidator="password" class="form-control" [(ngModel)]="form.passwordConfirm" #passwordConfirm="ngModel" [ngClass]="{ 'is-invalid': frm.submitted && password.invalid }"
+                required pattern="^[a-zA-Z0-9.\-_$@*!]+$" minlength="5" maxlength="20" placeholder="Jelszó mégegyszer" name="passwordConfirm"  id="confirmpassword">
+              <div *ngIf="frm.submitted && passwordConfirm.invalid" class="alert alert-danger">
+                <div *ngIf="passwordConfirm.errors?.required">Megerősítő jelszó megadása kötelező!</div>
+                <div *ngIf="passwordConfirm.errors?.minlength">Jelszó túl rövid!</div>
+                <div *ngIf="passwordConfirm.errors?.notEqual">Jelszavak nem egyeznek!</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <select class="form-control" [(ngModel)]="form.reminderQuestion" name = "question" (change)="menuChange($event)" required>
+                <option name = "default" [value] = "0" selected>Válassz ...</option>
+                <option name = "answer" [value] = "1" id="1" [attr.data-somedata]="1">Mi volt az első háziállatod neve?</option>
+                <option name = "answer" [value] = "2" id="2" [attr.data-somedata]="2"> Anyukád születési helye?</option>
+                <option name = "answer" [value] = "3" id="3" [attr.data-somedata]="3">Legjobb barátod/barátnőd neve?</option>
+                <option name = "answer" [value] = "4" id="4" [attr.data-somedata]="4">Kedvenc ünneped?</option>
+              </select>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" [(ngModel)]="form.answer" #answer="ngModel" required placeholder="Válasz" name="answer">
+                <div *ngIf="frm.submitted && password.invalid" class="alert alert-danger">
+                  <div *ngIf="password.errors.required">Jelszó megadása kötelező!</div>
+                  <div *ngIf="password.errors.minlength">Jelszó túl rövid!</div>
+                </div>
+              </div>
+            <button type="submit" name="button" class="btn btn-info">Regisztrálás</button>
+            <div *ngIf="alert" class="alert alert-danger">{{alert}}</div>
+            <div *ngIf="success" class="alert alert-success">{{success}}</div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+</div>

@@ -1,0 +1,65 @@
+
+<div class="container">
+  <div class="jumbotron">
+      <div class="tooltip2 glyphicon glyphicon-info-sign">
+          <span class="tooltiptext2"><pre>
+A lenyíló menüben a megfelelő tantárgyat kiválasztva,
+listázásra kerülnek az adott tantárgyhoz tartozó,
+mások vagy saját magunk által feltöltött jegyzetek.
+          </pre></span>
+        </div>
+    <h4>Jegyzet keresése</h4>
+    <br>
+    <div>
+      <form #searchForm = "ngForm">
+        <div class="form-group">
+          <label for="sel1">Válassz az alábbi tantárgyak közül:</label>
+          <select class="form-control" id="sel1" [(ngModel)]="form.downSub" name="down_sub"  (change)="filterNote($event)">
+            <option name = "sub" *ngFor="let subject of allSubject" [value]="subject.code" required>{{subject.name}}</option>
+          </select>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf = "existFiles">
+    <div class="jumbotron">
+     <p *ngFor = "let name of filesName" class = "noteLink" (click) = "downloadFile(name)">{{name}}</p>
+    </div>
+</div>
+<div class="container" *ngIf = "!existFiles && !first">
+    <div class="jumbotron">
+      <p>Ehhez a tárgyhoz nincs még jegyzet</p>
+    </div>
+</div>
+<div class="container">
+  <div class="jumbotron">
+      <div class="tooltip2 glyphicon glyphicon-info-sign">
+          <span class="tooltiptext2"><pre>
+A fájlok kiválasztása gombra kattintva lehetőségünk
+van kiválasztani képfájlt, Office-fájlokat vagy más
+szöveges dokumentumot. A lenyíló menüből válasszuk 
+ki a tantárgyat, melyhez a jegyzet tartozik, majd 
+kattintsunk a "Feltöltés" gombra.
+          </pre></span>
+        </div>
+    <h4>Jegyzet feltöltése</h4>
+    <br>    
+      <label for="exampleFormControlFile1">Válassz a fájlok közül:</label>
+      <input #file type="file" multiple/>
+      <br>
+      <form #shareNote = "ngForm">
+        <div class="form-group">
+            <label for="sel1">Válassz az alábbi tantárgyak közül:</label>
+            <select class="form-control" id="sel2" [(ngModel)]="form.upSub" name="up_sub" (change)="onSelect($event)">
+              <option name = "sub" *ngFor="let subject of allSubject" [value]="subject.code" >{{subject.name}}</option>
+            </select>
+        </div>
+        <button class="btn btn-info" (click) = "uploadNote(file.files)">Feltöltés</button>
+      </form>
+      <br/>
+    <span style="font-weight:bold;color:green;" *ngIf="progress > 0 && progress < 100">{{progress}}%</span>
+    <span style="font-weight:bold;color:green;" *ngIf="message">{{message}}</span>
+  </div>
+</div>
+  

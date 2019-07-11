@@ -1,0 +1,44 @@
+<div class="sticky" id="topheader">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header" routerLink="/calendar">
+        <img src="../assets/whale.png" alt="Avatar">
+        <a class="navbar-brand">PTI NoteShare</a>
+
+      </div>
+
+      <ul class="nav navbar-nav">
+        <!-- <li><a routerLink="/profile">Saját adatok<span class="sr-only">(current)</span></a></li> -->
+        <li><a routerLink="/timetable">Órarend<span class="sr-only">(current)</span></a></li>
+        <li><a routerLink="/noteshare">Jegyzet</a> </li>
+        <li><a routerLink="/milestones">Előrehaladás</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+
+
+        <li><a><span class="glyphicon glyphicon-log-out" (click)="logout()"></span></a></li>
+      </ul>
+    </div>
+  </nav>
+
+</div>
+
+<div class="parallax">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <a routerLink="/timetable"><div class="col-sm-4"><span class="spantext">P T I &nbsp; N O T E S H A R E</span></div></a>
+    <div class="col-sm-4" ></div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('#topheader .navbar-nav a').on('click', function () {
+    $('#topheader .navbar-nav').find('li.active').removeClass('active');
+    $(this).parent('li').addClass('active');
+  });
+</script>

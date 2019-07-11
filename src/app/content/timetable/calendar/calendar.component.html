@@ -1,0 +1,125 @@
+<button type="button" class="btn btn-info btn-lg glyphicon glyphicon-plus sticky" data-toggle="modal" data-target="#myModal"></button>
+<div class="tooltip2 glyphicon glyphicon-info-sign">
+	<span class="tooltiptext2"><pre>
+A Naptárban lehetőségünk van a Neptun rendszerből a megfelelő
+beállítások után exportált excel fájl feltöltése után látni
+az óráinkat vagy a vizsgáinkat napi, heti vagy havi lebontásban.
+Ehhez csupán a "Fájl feltöltése" gombra kell kattintanunk, majd
+kiválasztani az ezeket tartalmazó excel fájlt. 
+Továbbá saját magunk is adhatunk hozzá egyéni eseményeket a "+"
+gomb megnyomásával. A naptárban megjelenő különböző eseményeket
+különböző színek jelölik:
+Sárga - Felvett óra
+Piros - Felvett vizsga
+Kék - Felvehető vizsga
+Zöld - Egyéni esemény
+	</pre></span>
+</div>
+<div class="container">
+	<h1 class="my-5 text-center">{{name}}</h1>
+	<div class="row">
+		<div class="col-12 col-md-4 text-center text-md-left">
+			<div class="btn-group btn-group-sm">
+				<div class="btn btn-primary" (click)="view = 'month'; fetchEvents()" [class.active]="view === 'month'">
+					Havi
+				</div>
+				<div class="btn btn-primary" (click)="view = 'week'; fetchEvents()" [class.active]="view === 'week'">
+					Heti
+				</div>
+				<div class="btn btn-primary" (click)="view = 'day'; fetchEvents()" [class.active]="view === 'day'">
+					Napi
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-md-4 text-center">
+			<h4>{{ viewDate | calendarDate:(view + 'ViewTitle'):locale }}</h4>
+		</div>
+		<div class="col-12 col-md-4 text-center text-md-right">
+			<div class="btn-group btn-group-sm">
+				<div class="btn btn-primary" mwlCalendarPreviousView [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()"
+				 (viewChange)="fetchEvents()">
+					Vissza
+				</div>
+				<div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()" (viewChange)="fetchEvents()">
+					Most
+				</div>
+				<div class="btn btn-primary" mwlCalendarNextView [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()"
+				 (viewChange)="fetchEvents()">
+					Előre
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-12">
+
+			<div *ngIf="events$ | async; else loading; let events">
+				<div [ngSwitch]="view" >
+					<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
+					 [locale]="locale" [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" (dayClicked)="dayClicked($event.day)">
+					</mwl-calendar-month-view>
+					<mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn"
+					 [weekendDays]="weekendDays">
+					</mwl-calendar-week-view>
+					<mwl-calendar-day-view *ngSwitchCase="'day'" [locale]="locale" [viewDate]="viewDate" [events]="events">
+					</mwl-calendar-day-view>
+				</div>
+			</div>
+
+			<div *ngIf="!hasLesson || actualUser === ''">
+				<div [ngSwitch]="view">
+					<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [activeDayIsOpen]="activeDayIsOpen"
+					 [locale]="locale" [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" >
+					</mwl-calendar-month-view>
+					<mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [locale]="locale" [weekStartsOn]="weekStartsOn"
+						[weekendDays]="weekendDays">
+					</mwl-calendar-week-view>
+					<mwl-calendar-day-view *ngSwitchCase="'day'" [locale]="locale" [viewDate]="viewDate">
+					</mwl-calendar-day-view>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="myModal" role="dialog">
+	  <div class="modal-dialog" style="width:700px">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Esemény hozzáadása</h4>
+		  </div>
+		  <div class="modal-body">
+				<form #updateForm="ngForm" (ngSubmit) = "updateEvents()">
+				<table class="table table-bordered">
+						<thead>
+						  <tr>
+							<th>Esemény neve</th>
+							<th>Esemény helye</th>
+						</tr>				
+						</thead>
+						<tbody>
+						   <tr >
+								<td><input type="text" [(ngModel)]="form.eventsName" #eventsName="ngModel" name="eventsName"></td>
+								<td><input type="text" [(ngModel)]="form.eventsLocation" #eventsLocation="ngModel" name="eventsLocation"></td>
+							 </tr>
+							 <tr>	
+									<th>Kezdődátum</th>
+									<th>Végdátum</th>
+								</tr>
+							 <tr>
+								<td><input id = "ddd" class="form-control" type="datetime-local" [(ngModel)]="form.startDate" #startDate="ngModel" name="startDate" [value]="date" ></td>
+								<td><input class="form-control" type="datetime-local" [(ngModel)]="form.endDate" #endDate="ngModel" name="endDate"></td>
+						  </tr>
+						</tbody>	  
+				</table>
+					  <div>
+							<td><button class="btn btn-primary pull-right">Hozzáadás</button></td>
+						</div>
+					</form>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Bezárás</button>
+		  </div>
+		</div>
+
+</div>
+</div>

@@ -1,0 +1,50 @@
+.checked {
+    color: orange;
+}
+.noteLink{
+    color: blue;
+    cursor: pointer;
+    font-size: 12px;
+    margin-bottom: 0px;
+}
+.noteLink:hover{
+    text-decoration: underline;
+}
+
+.jumbotron {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.tooltip2 {
+    position: relative;
+    display: inline-block;
+    font-size: large;
+    margin-left: 1040px;
+   
+}
+  
+  .tooltip2 .tooltiptext2 {
+    visibility: hidden;
+    
+    width: 420px;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -410px;
+    font-size: small;
+    
+   
+    opacity: 0;
+    transition: opacity 1s;
+  }
+  
+  .tooltip2:hover .tooltiptext2 {
+    visibility: visible;
+    opacity: 1;
+  }

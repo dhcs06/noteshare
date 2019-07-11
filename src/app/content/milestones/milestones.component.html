@@ -1,0 +1,197 @@
+<div class="header">
+  <h1>Előrehaladás</h1>
+  
+  <h3>Programtervező Informatikus, BSc.</h3>
+  
+</div>
+<div class="tooltip2 glyphicon glyphicon-info-sign">
+    <span class="tooltiptext2"><pre>
+A különböző tantárgyak jelölőnégyzeteit bepipálva 
+elérhetővé válnak az adott tárgyra épülő további
+tantárgyak. Minden bepipált jelölőnégyzethez tartozó 
+tárgy kreditértéke számolásra kerül az oldal alján 
+található sorban, továbbá a sávos tantárgyak 
+összesített kreditértéke feltüntetésre kerül a 
+megfelelő sáv neve mellett. A sáv neve zöldre vált,
+abban az esetben, ha sávból a szükséges 5, vagy
+több kreditet teljesítettük.
+    </pre></span>
+  </div>
+<br>
+<br>
+<div class="container-fluid" *ngIf="subjects != null else loading">
+  <div class="jumbotron">
+      
+
+    <table id="1sttable">
+      <tr>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+      </tr>
+      <tr>
+        <td>
+          <ul *ngFor="let subject of subjects">
+
+            <li *ngIf="subject.semester==1">
+              <div class="card elsofeleves">
+                <h5><b>{{subject.name}}</b></h5>
+                <h6>{{subject.credit}}</h6>
+                <input type="checkbox" [attr.id]="subject.code" (click)="event($event)" ng-model="opts.val1">
+              </div>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul *ngFor="let subject of subjects">
+            <li *ngIf="subject.semester==2">
+              <div class="card">
+                <h5><b>{{subject.name}}</b></h5>
+                <h6>{{subject.credit}}</h6>
+                <input type="checkbox" [attr.id]="subject.code" (click)="event($event)" disabled>
+              </div>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul *ngFor="let subject of subjects">
+
+            <li *ngIf="subject.semester==3">
+              <div class="card">
+                <h5><b>{{subject.name}}</b></h5>
+                <h6>{{subject.credit}}</h6>
+                <input type="checkbox" [attr.id]="subject.code" (click)="event($event)" disabled>
+              </div>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul *ngFor="let subject of subjects">
+
+            <li *ngIf="subject.semester==4">
+              <div class="card">
+                <h5><b>{{subject.name}}</b></h5>
+                <h6>{{subject.credit}}</h6>
+                <input type="checkbox" [attr.id]="subject.code" (click)="event($event)" disabled>
+              </div>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul *ngFor="let subject of subjects">
+
+            <li *ngIf="subject.semester==5">
+              <div class="card">
+                <h5><b>{{subject.name}}</b></h5>
+                <h6>{{subject.credit}}</h6>
+                <input type="checkbox" [attr.id]="subject.code" (click)="event($event)" disabled>
+              </div>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul *ngFor="let subject of subjects">
+
+            <li *ngIf="subject.semester==6">
+              <div class="card">
+                <h5><b>{{subject.name}}</b></h5>
+                <h6>{{subject.credit}}</h6>
+                <input type="checkbox" [attr.id]="subject.code" (click)="event($event)" disabled>
+              </div>
+            </li>
+          </ul>
+        </td>
+
+      </tr>
+    </table>
+    <br>
+    <br>
+
+    <table id="2ndtable">
+      <tr>
+
+        <th id = "semeszter" class="Asav"><label id="A-SAV">A sáv ({{creditSav('A')}})</label></th>
+        <th id = "semeszter" class="Bsav"><label id="B-SAV">B sáv ({{creditSav('B')}})</label></th>
+        <th id = "semeszter" class="Csav"><label id="C-SAV">C sáv ({{creditSav('C')}})</label></th>
+        <th id = "semeszter" class="Dsav"><label id="D-SAV">D sáv ({{creditSav('D')}})</label></th>
+        <th id = "semeszter" class="Ssav"><label id="S-SAV">S sáv ({{creditSav('S')}})</label></th>
+
+      </tr>
+
+      <tr class="stripe">
+        <td>
+          <ul *ngFor="let subject of subjects">
+
+            <li *ngIf="subject.semester=='A'">
+              <div class="card stripe">
+                <h5><b>{{subject.name}}</b></h5>
+                <h6>{{subject.credit}}</h6>
+                <input type="checkbox" [attr.id]="subject.code" (click)="event($event)" disabled>
+              </div>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul *ngFor="let subject of subjects">
+
+            <li *ngIf="subject.semester=='B'">
+              <div class="card stripe">
+                <h5><b>{{subject.name}}</b></h5>
+                <h6>{{subject.credit}}</h6>
+                <input type="checkbox" [attr.id]="subject.code" (click)="event($event)" disabled>
+              </div>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul *ngFor="let subject of subjects">
+
+            <li *ngIf="subject.semester=='C'">
+              <div class="card stripe">
+                <h5><b>{{subject.name}}</b></h5>
+                <h6>{{subject.credit}}</h6>
+                <input type="checkbox" [attr.id]="subject.code" (click)="event($event)" disabled>
+              </div>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul *ngFor="let subject of subjects">
+
+            <li *ngIf="subject.semester=='D'">
+              <div class="card stripe">
+                <h5><b>{{subject.name}}</b></h5>
+                <h6>{{subject.credit}}</h6>
+                <input type="checkbox" [attr.id]="subject.code" (click)="event($event)" disabled>
+              </div>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul *ngFor="let subject of subjects">
+
+            <li *ngIf="subject.semester=='S'">
+              <div class="card stripe">
+                <h5><b>{{subject.name}}</b></h5>
+                <h6>{{subject.credit}}</h6>
+                <input type="checkbox" [attr.id]="subject.code" (click)="event($event)" disabled>
+              </div>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+    
+    <div class="credits" ngFor="let subject of subjects">
+      <label>Teljesített kreditek száma összesen: 180/</label>
+      <span><label>{{credit()}}</label></span>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <h1>Betöltés alatt, kérlek várj!</h1>
+  <div class="loader"></div>
+</ng-template> 

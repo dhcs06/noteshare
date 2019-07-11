@@ -1,0 +1,88 @@
+<div id="modal-wrapper" class="modal2">
+  <form class="modal-content2 animate" #frm="ngForm" (ngSubmit)="frm.form.valid && login()">
+    <div class="tab-group">
+      <ul class="nav nav-tabs">
+        <li class="active" id="login"><a routerLink="/login">Bejelentkezés</a></li>
+        <li id="signup"><a routerLink="/singup">Regisztráció</a></li>
+      </ul>
+      <div id="login" class="tab-pane fade in active">
+        <div class="imgcontainer">
+          <img src="../../assets/whale.png" alt="Avatar" class="avatar">
+          <h1 style="text-align:center">Bejelentkezés</h1>
+        </div>
+
+        <div class="container2">
+            <div class="form-group">
+              <input type="text" class="form-control" [(ngModel)]="form.username" #username="ngModel" [ngClass]="{ 'is-invalid': frm.submitted && username.invalid }"
+                required minlength="5" placeholder="Felhasználónév" name="username" (input)="clearAlert()">
+              <div *ngIf="frm.submitted && username.invalid" class="alert alert-danger">
+                <div *ngIf="username.errors.required">Felhasználónév megadása kötelező!</div>
+                <div *ngIf="username.errors.minlength">Felhasználónév túl rövid!</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" [(ngModel)]="form.password" #password="ngModel" [ngClass]="{ 'is-invalid': frm.submitted && username.invalid }"
+                required minlength="5" placeholder="Jelszó" name="password">
+              <div *ngIf="frm.submitted && password.invalid" class="alert alert-danger">
+                <div *ngIf="password.errors.required">Jelszó megadása kötelező!</div>
+                <div *ngIf="password.errors.minlength">Jelszó túl rövid!</div>
+              </div>
+            </div>
+            <button type="submit" name="button" class="btn btn-info add">Bejelentkezés</button>
+            <div *ngIf="alert" [ngClass]="{'alert': true, 'alert-warning': inProgress, 'alert-danger': danger, 'alert-success': success}">{{alert}}</div>
+            <a href="#" style="text-decoration:none; margin-left:34px; margin-top:35px;" data-toggle="modal" data-target="#myModal">Elfelejtettem a jelszavam</a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+	  <div class="modal-dialog" style="width:700px">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Jelszó módosítása</h4>
+		  </div>
+		  <div class="modal-body">
+				<form>
+          <h3>Adja meg a felhasználónevét</h3>
+          <input type="text" class="form-control" [(ngModel)]="form.user" #user="ngModel" required  name="user" placeholder="Felhasználónév">
+          <input type="button" class="btn btn-primary pull-left" value="Választ" (click) ="existingUser()">
+          <br>
+        </form>
+        <form #updateForm="ngForm" (ngSubmit)="updateForm.form.valid && updatePassword()">
+          <div *ngIf = "existUser">
+            <br>
+            <h3>{{question}}</h3>
+            <input type="text" class="form-control" [(ngModel)]="form.answer" #answer="ngModel" required  name="answer" (input)="clearAlert()">
+          </div>
+					<div *ngIf = "existUser">
+              <div class="form-group">
+                  <input type="password" class="form-control" [(ngModel)]="form.repassword" #repassword="ngModel" [ngClass]="{ 'is-invalid': updateForm.submitted && repassword.invalid }"
+                    required pattern="^[a-zA-Z0-9.\-_$@*!]+$" minlength="5" maxlength="20" placeholder="Jelszó" name="repassword">
+                  <div *ngIf="updateForm.submitted && repassword.invalid" class="alert alert-danger">
+                    <div *ngIf="repassword.errors?.required">Jelszó megadása kötelező!</div>
+                    <div *ngIf="repassword.errors?.minlength">Jelszó túl rövid!</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" appConfirmEqualValidator="repassword" [(ngModel)]="form.repasswordConfirm" #repasswordConfirm="ngModel" [ngClass]="{ 'is-invalid': updateForm.submitted && repassword.invalid }"
+                    required pattern="^[a-zA-Z0-9.\-_$@*!]+$" minlength="5" maxlength="20" placeholder="Jelszó mégegyszer" name="repasswordConfirm">
+                  <div *ngIf="updateForm.submitted && repasswordConfirm.invalid" class="alert alert-danger">
+                    <div *ngIf="repasswordConfirm.errors?.required">Megerősítő jelszó megadása kötelező!</div>
+                    <div *ngIf="repasswordConfirm.errors?.minlength">Jelszó túl rövid!</div>
+                    <div *ngIf="repasswordConfirm.errors?.notEqual">Jelszavak nem egyeznek!</div>
+                  </div>
+                </div>
+            <button class="btn btn-primary pull-left">Jelszó megváltoztatása</button>
+          </div>
+        </form>
+       </div>
+       
+		  <div class="modal-footer">
+          <div *ngIf="alertForgotPwd" [ngClass]="{'alert': true, 'alert-danger': danger, 'alert-success': success}">{{alertForgotPwd}}</div>
+			<button type="button" class="btn btn-default" data-dismiss="modal" (click)="clearAlert()">Bezárás</button>
+		  </div>
+		</div>
+</div>
+</div>
